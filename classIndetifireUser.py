@@ -6,10 +6,13 @@ import ClassHandleUserData
 class IndetifireUser:
     db = sqlite3.connect("ErectusDB.db")
     cur = db.cursor()
+    threadList = []
+    def __init__(self, threadList_):
+        self.threadList = threadList_
     def transfer(self, connection):
-        global threadsList
 
-        UID = connection[0].recv(100).decode()
+
+        UID = connection.recv(100).decode()
         print(UID)
         if UID:
             user = ClassUser.UserErectus(connection, UID, None)
@@ -17,9 +20,12 @@ class IndetifireUser:
 
         else:
             exit(228)
+        exit("STOP! ITS DONT END")
         # # # # # # # # # # COMMING SOON # # # # # # #
-        self.cur.execute(f"SELECT token FROM Users WHERE userUID = '{UID}'")
-        data = self.cur.fetchall()
+        data = []
+        with sqlite3.connect("ErectusDB.db") as cur:
+            cur.execute(f"SELECT token FROM Users WHERE userUID = '{UID}'")
+            data = cur.fetchall()
 
         if data:
             user.tokenFireBase = data[0][0]
@@ -28,11 +34,12 @@ class IndetifireUser:
             self.exceptionNonToken(user)
 
     def pushToHandler(self, user):
-        global threadList
-        threadList.append([Thread(target=ClassHandleUserData.HandleUserData(), args=(user, )), user])
-        threadList[-1][0].start()
+
+        self.threadList.append([Thread(target=ClassHandleUserData.HandleUserData(), args=(user, )), user])
+        self.threadList[-1][0].start()
 
     def exceptionNonToken(self, user):
+
         r = requests.get(r'https://erectus-63adc.firebaseio.com/Users.json?print=pretty')
         responseFromFirebase = r.json()
         try:
@@ -46,9 +53,11 @@ class IndetifireUser:
         self.cur.execute(f"INSERT INTO Users VALUES ('{user.userUID}' , '{token}')")
         self.db.commit()
 
-        threadsList.append([Thread(target=ClassHandleUserData.HandleUserData(), args=(user,)), user])
-        threadsList[-1][0].start()
+        self.threadList.append([Thread(target=ClassHandleUserData.HandleUserData(), args=(user,)), user])
+        self.threadList[-1][0].start()
 
     def kostul(self, user):
-        threadsList.append([Thread(target=ClassHandleUserData.HandleUserData(), args=(user,)), user])
-        threadsList[-1][0].start()
+        classJopa_Penis228 = ClassHandleUserData.HandleUserData()
+        self.threadList.append([Thread(target=classJopa_Penis228.handleData, args=(user,)), user])
+        self.threadList[-1][0].start()
+        print("END OF TRANSFER")

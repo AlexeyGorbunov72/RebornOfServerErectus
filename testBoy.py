@@ -1,7 +1,7 @@
 import socket
 
-port=1502
-ip="172.32.5.100"
+port=1498
+ip="192.168.0.14"
 
 sock = socket.socket()
 

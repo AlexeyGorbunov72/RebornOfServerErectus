@@ -7,7 +7,9 @@ from firebase_admin import credentials
 class Server:
     sock = None
     cred = None
-    def __init__(self, port, ip):
+    threadList = []
+    def __init__(self, port, ip, threadList_):
+        self.threadList = threadList_
         self.sock = socket.socket()
         self.sock.bind((ip, port))
         self.sock.listen(10000)
@@ -18,6 +20,6 @@ class Server:
     def startListen(self):
         print("Start listening...")
         server_ = self
-        waitConnection = ClassWaitConnection.WaitConnection(server_)
+        waitConnection = ClassWaitConnection.WaitConnection(server=server_, threadList_=self.threadList)
 
         waitConnection.waitConnection()
