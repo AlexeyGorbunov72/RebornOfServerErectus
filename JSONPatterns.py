@@ -5,7 +5,7 @@ class JSONPatterns(Enum):
     chatingJson = 2
 pattrns = [{"type": 0, "UID": ""},
            {"type": 1,"search" : ""},
-           {"type": 2, "chatID": 0, "message": "", "nickname": ""}]
+           {"type": 2, "chatID": 0, "message": "", "nickname": "", "senderUID": ""}]
 
 def getSerchJSON():
     return pattrns[JSONPatterns.searchJson.value]

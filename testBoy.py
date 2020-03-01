@@ -11,8 +11,8 @@ sock = socket.socket()
 sock.connect((ip, port))
 a = Thread(target=reciving, args=(sock, ))
 a.start()
-dictPattrn = {"type": 2, "chatID": 228, "message": "hello from dude 1", "nickname": "dude 1"}
+dictPattrn = {"type": 2, "chatID": 228, "message": "hello from dude 1", "nickname": "dude 1", "senderUID": "1"}
 sock.send(input("uid: ").encode())
 while True:
-    dictPattrn["text"] = input(":")
+    dictPattrn["message"] = input(":")
     sock.send(json.dumps(dictPattrn).encode())
