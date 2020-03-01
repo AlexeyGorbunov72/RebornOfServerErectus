@@ -35,7 +35,7 @@ class IndetifireUser:
 
     def pushToHandler(self, user):
 
-        self.threadList.append([Thread(target=ClassHandleUserData.HandleUserData(), args=(user, )), user])
+        self.threadList.append([Thread(target=ClassHandleUserData.HandleUserData(threadList_=self.threadList), args=(user, )), user])
         self.threadList[-1][0].start()
 
     def exceptionNonToken(self, user):
@@ -53,11 +53,12 @@ class IndetifireUser:
         self.cur.execute(f"INSERT INTO Users VALUES ('{user.userUID}' , '{token}')")
         self.db.commit()
 
-        self.threadList.append([Thread(target=ClassHandleUserData.HandleUserData(), args=(user,)), user])
+        self.threadList.append([Thread(target=ClassHandleUserData.HandleUserData(threadList_=self.threadList), args=(user,)), user])
         self.threadList[-1][0].start()
 
     def kostul(self, user):
-        classJopa_Penis228 = ClassHandleUserData.HandleUserData()
+        print("in kostul: ", self.threadList)
+        classJopa_Penis228 = ClassHandleUserData.HandleUserData(threadList_=self.threadList)
         self.threadList.append([Thread(target=classJopa_Penis228.handleData, args=(user,)), user])
         self.threadList[-1][0].start()
         print("END OF TRANSFER")

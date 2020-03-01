@@ -9,6 +9,9 @@ class UserErectus:
     def sendUserToUser(self):
         pass
 
+    def sendMessage(self, message):
+        self.connection.send(message.encode())
+
     def reciveByUser(self):
 
         return self.connection.recv(1024).decode()
